@@ -34,6 +34,25 @@ class Carteira:
         for transacao in self.transacoes:
             transacao.mostrar_transacao()
             
+    def total_receitas(self):
+        total = 0
+        
+        for transacao in self.transacoes:
+            if isinstance(transacao, Receita):
+                total += transacao.valor
+        
+        print(f"📈 [SUCESSO] Cálculo de Receitas finalizado! Total: R$ {total:.2f} ✅")
+        
+    def total_despesas(self):
+        total = 0
+        
+        for transacao in self.transacoes:
+            if isinstance(transacao, Despesa):
+                total += transacao.valor
+        
+        print(f"📉 [SUCESSO] Cálculo de Despesas finalizado! Total: R$ {total:.2f} ✅")
+            
+            
 # Teste Final
 
 minha_carteira = Carteira()
@@ -56,3 +75,7 @@ minha_carteira.mostrar_transacoes()
 
 print("\n--- Resumo Financeiro ---")
 minha_carteira.mostrar_saldo()
+
+print("\n--- Estatísticas Financeiras ---")
+minha_carteira.total_receitas()
+minha_carteira.total_despesas()

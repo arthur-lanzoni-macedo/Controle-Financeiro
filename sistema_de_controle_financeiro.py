@@ -63,50 +63,85 @@ class Carteira:
                         maior_valor = transacao.valor
             
         print(f"📉 [SUCESSO] Busca finalizada! Maior despesa encontrada: R$ {maior_valor:.2f} ✅")
-
-
-# CLASSE EM ANDAMENTO
  
     def gasto_por_categoria(self):
         gasto_categoria = {}
         
         for transacao_por_categoria in self.transacoes:
             if isinstance(transacao_por_categoria, Despesa):
+                categoria_atual = transacao_por_categoria.categoria
+                valor_atual = transacao_por_categoria.valor
                 
-                if transacao_por_categoria in self.transacoes:
-                    sum(transacao_por_categoria.valor)
+                if categoria_atual in gasto_categoria:
+                    gasto_categoria[categoria_atual] += valor_atual
                 else:
-                    gasto_categoria = {'transacao_por_categoria.categoria', transacao_por_categoria.valor}
-                    
-                    print('📋 Listagem de Despesas:')
-                    print('-' * 25)
-                    print(f'{transacao_por_categoria.categoria} → {transacao_por_categoria.valor:.2f}')
-                
+                    gasto_categoria[categoria_atual] = valor_atual
+        
+        print("📋 Gastos por Categoria")
+        print("-" * 23)
+        
+        for categoria, total in gasto_categoria.items():
+            print(f"{categoria} → R$ {total:.2f}")
             
+    def categoria_maior_gasto(self):
+        gasto_por_categoria = {}
+        
+        for transacao_por_categoria in self.transacoes:
+            if isinstance(transacao_por_categoria, Despesa):
+                categoria_atual = transacao_por_categoria.categoria
+                valor_atual = transacao_por_categoria.valor
+                
+                if categoria_atual in gasto_por_categoria:
+                    gasto_por_categoria[categoria_atual] += valor_atual
+                else:
+                    gasto_por_categoria[categoria_atual] = valor_atual
+                      
+        categoria_com_maior_gasto = None
+        maior_valor = 0
+                
+        for categoria, valor in gasto_por_categoria.items():
+                        
+            if valor > maior_valor:
+                maior_valor = valor
+                categoria_com_maior_gasto = categoria
+            
+        print("\n🏆 Destaque de Gastos")
+        print("-" * 23)
+
+        if categoria_com_maior_gasto:
+            print(f"Maior Gasto: {categoria_com_maior_gasto}")
+            print(f"Valor Total: R$ {maior_valor:.2f}")
+        else:
+            print("❌ Nenhuma despesa encontrada para análise.")
+        
 # Teste Final
 
 minha_carteira = Carteira()
 
-t1 = Receita('Salário Mensal', 5000.00, 'Trabalho')
-t2 = Receita('Freelance Logo', 350.00, 'Design')
-t3 = Despesa('Mercado Semanal', 420.50, 'Alimentação')
-t4 = Despesa('Uber Shopping', 25.00, 'Transporte')
-t5 = Despesa('Ingresso Cinema', 45.00, 'Lazer')
+t1 = Receita("Salário Mensal", 5000.00, "Trabalho")
+t2 = Receita("Freelance Logo", 350.00, "Design")
+t3 = Despesa("Mercado Semanal", 420.50, "Alimentação")
+t4 = Despesa("Uber Shopping", 25.00, "Transporte")
+t5 = Despesa("Ingresso Cinema", 45.00, "Lazer")
 
-print('--- Processando Transações ---')
+print("--- Processando Transações ---")
 minha_carteira.adicionar_transacao(t1)
 minha_carteira.adicionar_transacao(t2)
 minha_carteira.adicionar_transacao(t3)
 minha_carteira.adicionar_transacao(t4)
 minha_carteira.adicionar_transacao(t5)
 
-print('\n--- Extrato Detalhado ---')
+print("\n--- Extrato Detalhado ---")
 minha_carteira.mostrar_transacoes()
 
-print('\n--- Resumo Financeiro ---')
+print("\n--- Resumo Financeiro ---")
 minha_carteira.mostrar_saldo()
 
-print('\n--- Estatísticas Financeiras ---')
-minha_carteira.total_receitas()
-minha_carteira.total_despesas()
+print("\n--- Análise por Categoria ---")
+minha_carteira.gasto_por_categoria()
+
+print("\n--- Maior Despesa Individual ---")
 minha_carteira.maior_gasto()
+
+print("\n--- Categoria com Maior Gasto ---")
+minha_carteira.categoria_maior_gasto()

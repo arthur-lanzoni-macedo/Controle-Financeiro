@@ -1,0 +1,32 @@
+[
+    {
+        "tipo": "Receita",
+        "descricao": "Salario Mensal",
+        "valor": 5000.0,
+        "categoria": "Trabalho"
+    },
+    {
+        "tipo": "Receita",
+        "descricao": "Freelance Logo",
+        "valor": 350.0,
+        "categoria": "Design"
+    },
+    {
+        "tipo": "Despesa",
+        "descricao": "Mercado Semanal",
+        "valor": 420.5,
+        "categoria": "Alimentacao"
+    },
+    {
+        "tipo": "Despesa",
+        "descricao": "Uber Shopping",
+        "valor": 25.0,
+        "categoria": "Transporte"
+    },
+    {
+        "tipo": "Despesa",
+        "descricao": "Ingresso Cinema",
+        "valor": 45.0,
+        "categoria": "Lazer"
+    }
+]

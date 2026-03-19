@@ -1,8 +1,20 @@
+import json
+
 class Transacao:
     def __init__(self, descricao, valor, categoria):
         self.descricao = descricao
         self.valor = valor
         self.categoria = categoria
+
+    def to_dict(self):
+        dicionario_json = {}
+        
+        dicionario_json['tipo'] = self.__class__.__name__
+        dicionario_json['descricao'] = self.descricao
+        dicionario_json['valor'] = self.valor
+        dicionario_json['categoria'] = self.categoria
+        
+        return dicionario_json
         
     def mostrar_transacao(self):
         print(f'{self.descricao} | {self.valor} | {self.categoria}')
@@ -113,14 +125,23 @@ class Carteira:
             print(f"Valor Total: R$ {maior_valor:.2f}")
         else:
             print("❌ Nenhuma despesa encontrada para análise.")
+            
+    def salvar_json (self):
+        lista_json = []
         
+        for transacao in self.transacoes:
+            lista_json.append(transacao.to_dict())
+            
+        with open('transacao.json', 'w') as arquivo_transcao:
+            json.dump(lista_json, arquivo_transcao, indent=4)
+            
 # Teste Final
 
 minha_carteira = Carteira()
 
-t1 = Receita("Salário Mensal", 5000.00, "Trabalho")
+t1 = Receita("Salario Mensal", 5000.00, "Trabalho")
 t2 = Receita("Freelance Logo", 350.00, "Design")
-t3 = Despesa("Mercado Semanal", 420.50, "Alimentação")
+t3 = Despesa("Mercado Semanal", 420.50, "Alimentacao")
 t4 = Despesa("Uber Shopping", 25.00, "Transporte")
 t5 = Despesa("Ingresso Cinema", 45.00, "Lazer")
 
@@ -145,3 +166,8 @@ minha_carteira.maior_gasto()
 
 print("\n--- Categoria com Maior Gasto ---")
 minha_carteira.categoria_maior_gasto()
+
+print("\n--- Salvando transações em JSON ---")
+minha_carteira.salvar_json()
+
+print("✅ Dados salvos com sucesso!")

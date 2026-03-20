@@ -1,7 +1,7 @@
 [
     {
         "tipo": "Receita",
-        "descricao": "Salario Mensal",
+        "descricao": "Sal\u00e1rio Mensal",
         "valor": 5000.0,
         "categoria": "Trabalho"
     },

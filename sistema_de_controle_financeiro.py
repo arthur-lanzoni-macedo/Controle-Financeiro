@@ -1,51 +1,64 @@
-import json
+import json  # salvar os dados em arquivo JSON
 
+
+# Classe base de qualquer transação (entrada ou saída)
 class Transacao:
     def __init__(self, descricao, valor, categoria):
         self.descricao = descricao
         self.valor = valor
         self.categoria = categoria
 
+    # transforma a transação em dicionário pra salvar no JSON
     def to_dict(self):
         dicionario_json = {}
         
-        dicionario_json['tipo'] = self.__class__.__name__
+        dicionario_json['tipo'] = self.__class__.__name__  # Receita ou Despesa
         dicionario_json['descricao'] = self.descricao
         dicionario_json['valor'] = self.valor
         dicionario_json['categoria'] = self.categoria
         
         return dicionario_json
         
+    # mostra a transação no terminal
     def mostrar_transacao(self):
         print(f'{self.descricao} | {self.valor} | {self.categoria}')
         
+
+# Classe de dinheiro que entra
 class Receita(Transacao):
     def impacto_saldo(self):
-        print(f'✅ Sucesso: R$ +{self.valor:.2f} adicionado ao saldo')
-        return +self.valor
+        print(f'✅ Entrada: R$ +{self.valor:.2f} adicionado ao saldo')
+        return +self.valor  # soma no saldo
 
+
+# Classe de dinheiro que sai
 class Despesa(Transacao):
     def impacto_saldo(self):
         print(f'⚠️ Saída: R$ -{self.valor:.2f} debitado com sucesso')
-        return -self.valor
+        return -self.valor  # subtrai do saldo
 
+
+# Classe que controla tudo (saldo + lista de transações)
 class Carteira:
     def __init__(self):
         self.saldo = 0
-        self.transacoes = []
+        self.transacoes = []  # lista onde ficam todas as transações
         
+    # adiciona uma transação e atualiza o saldo
     def adicionar_transacao(self, transacao):
         self.transacoes.append(transacao)
-        
         self.saldo += transacao.impacto_saldo()
         
+    # mostra o saldo atual
     def mostrar_saldo(self):
         print(f'Saldo atual: R$ {self.saldo}')
         
+    # mostra todas as transações cadastradas
     def mostrar_transacoes(self):
         for transacao in self.transacoes:
             transacao.mostrar_transacao()
             
+    # soma todas as receitas
     def total_receitas(self):
         total = 0
         
@@ -53,8 +66,9 @@ class Carteira:
             if isinstance(transacao, Receita):
                 total += transacao.valor
         
-        print(f'📈 [SUCESSO] Cálculo de Receitas finalizado! Total: R$ {total:.2f} ✅')
+        print(f'Total de receitas: R$ {total:.2f}')
         
+    # soma todas as despesas
     def total_despesas(self):
         total = 0
         
@@ -62,112 +76,149 @@ class Carteira:
             if isinstance(transacao, Despesa):
                 total += transacao.valor
         
-        print(f'📉 [SUCESSO] Cálculo de Despesas finalizado! Total: R$ {total:.2f} ✅')
+        print(f'Total de despesas: R$ {total:.2f}')
         
+    # pega a maior despesa individual
     def maior_gasto(self):
         maior_valor = 0
         
         for transacao in self.transacoes:
             if isinstance(transacao, Despesa):
-                
-                if maior_valor == 0 or transacao.valor > maior_valor:
-                    if maior_valor < transacao.valor:
-                        maior_valor = transacao.valor
+                if transacao.valor > maior_valor:
+                    maior_valor = transacao.valor
             
-        print(f"📉 [SUCESSO] Busca finalizada! Maior despesa encontrada: R$ {maior_valor:.2f} ✅")
+        print(f"Maior despesa: R$ {maior_valor:.2f}")
  
+    # mostra quanto foi gasto por categoria
     def gasto_por_categoria(self):
         gasto_categoria = {}
         
-        for transacao_por_categoria in self.transacoes:
-            if isinstance(transacao_por_categoria, Despesa):
-                categoria_atual = transacao_por_categoria.categoria
-                valor_atual = transacao_por_categoria.valor
+        for transacao in self.transacoes:
+            if isinstance(transacao, Despesa):
+                categoria = transacao.categoria
+                valor = transacao.valor
                 
-                if categoria_atual in gasto_categoria:
-                    gasto_categoria[categoria_atual] += valor_atual
+                if categoria in gasto_categoria:
+                    gasto_categoria[categoria] += valor
                 else:
-                    gasto_categoria[categoria_atual] = valor_atual
+                    gasto_categoria[categoria] = valor
         
-        print("📋 Gastos por Categoria")
-        print("-" * 23)
+        print("Gastos por categoria:")
         
         for categoria, total in gasto_categoria.items():
             print(f"{categoria} → R$ {total:.2f}")
             
+    # mostra qual categoria teve mais gasto
     def categoria_maior_gasto(self):
         gasto_por_categoria = {}
         
-        for transacao_por_categoria in self.transacoes:
-            if isinstance(transacao_por_categoria, Despesa):
-                categoria_atual = transacao_por_categoria.categoria
-                valor_atual = transacao_por_categoria.valor
+        for transacao in self.transacoes:
+            if isinstance(transacao, Despesa):
+                categoria = transacao.categoria
+                valor = transacao.valor
                 
-                if categoria_atual in gasto_por_categoria:
-                    gasto_por_categoria[categoria_atual] += valor_atual
+                if categoria in gasto_por_categoria:
+                    gasto_por_categoria[categoria] += valor
                 else:
-                    gasto_por_categoria[categoria_atual] = valor_atual
+                    gasto_por_categoria[categoria] = valor
                       
         categoria_com_maior_gasto = None
         maior_valor = 0
                 
         for categoria, valor in gasto_por_categoria.items():
-                        
             if valor > maior_valor:
                 maior_valor = valor
                 categoria_com_maior_gasto = categoria
             
-        print("\n🏆 Destaque de Gastos")
-        print("-" * 23)
-
         if categoria_com_maior_gasto:
-            print(f"Maior Gasto: {categoria_com_maior_gasto}")
-            print(f"Valor Total: R$ {maior_valor:.2f}")
+            print(f"Categoria com maior gasto: {categoria_com_maior_gasto} — R$ {maior_valor:.2f}")
         else:
-            print("❌ Nenhuma despesa encontrada para análise.")
+            print("Nenhuma despesa encontrada")
             
-    def salvar_json (self):
+    # salva tudo num arquivo JSON
+    def salvar_json(self):
         lista_json = []
         
         for transacao in self.transacoes:
             lista_json.append(transacao.to_dict())
             
-        with open('transacao.json', 'w') as arquivo_transcao:
-            json.dump(lista_json, arquivo_transcao, indent=4)
+        with open('transacao.json', 'w') as arquivo_transacao:
+            json.dump(lista_json, arquivo_transacao, indent=4)
             
-# Teste Final
+    # carregar arquivo JSON
+    def carregar_json(self):
+        
+        try:
+            with open('transacao.json', 'r') as arquivo_transacao:
+                dados = json.load(arquivo_transacao)
+                        
+            for item_json in dados:
+                tipo = item_json['tipo']
+                descricao = item_json['descricao']
+                valor = item_json['valor']
+                categoria = item_json['categoria']
+                
+                tipo_lista = set()
+                              
+                if tipo == 'Receita':
+                    tipo_lista = Receita(descricao, valor, categoria)
+                elif tipo == 'Despesa':
+                    tipo_lista = Despesa(descricao, valor, categoria)
+                
+                self.adicionar_transacao(tipo_lista)
+                
+        except FileNotFoundError:
+            print(f"Erro: O arquivo não foi encontrado.")            
+               
+
+# ===== TESTE =====
 
 minha_carteira = Carteira()
 
-t1 = Receita("Salario Mensal", 5000.00, "Trabalho")
-t2 = Receita("Freelance Logo", 350.00, "Design")
-t3 = Despesa("Mercado Semanal", 420.50, "Alimentacao")
-t4 = Despesa("Uber Shopping", 25.00, "Transporte")
-t5 = Despesa("Ingresso Cinema", 45.00, "Lazer")
+def exibir_titulo(mensagem):
+    print(f"\n{'='*10} {mensagem} {'='*10}")
 
-print("--- Processando Transações ---")
-minha_carteira.adicionar_transacao(t1)
-minha_carteira.adicionar_transacao(t2)
-minha_carteira.adicionar_transacao(t3)
-minha_carteira.adicionar_transacao(t4)
-minha_carteira.adicionar_transacao(t5)
+# --- Inicialização ---
+exibir_titulo("📂 SISTEMA DE FINANÇAS")
+print("🔄 Carregando dados anteriores...")
+minha_carteira.carregar_json()
 
-print("\n--- Extrato Detalhado ---")
+# ⭐ SÓ adiciona dados se a carteira estiver vazia
+if len(minha_carteira.transacoes) == 0:
+
+    print("\n🆕 Nenhum dado encontrado. Criando dados iniciais...")
+
+    novas_transacoes = [
+        Receita("Salário Mensal", 5000.00, "Trabalho"),
+        Receita("Freelance Logo", 350.00, "Design"),
+        Despesa("Mercado Semanal", 420.50, "Alimentacao"),
+        Despesa("Uber Shopping", 25.00, "Transporte"),
+        Despesa("Ingresso Cinema", 45.00, "Lazer")
+    ]
+
+    for t in novas_transacoes:
+        minha_carteira.adicionar_transacao(t)
+
+else:
+    print("📊 Dados existentes carregados com sucesso!")
+
+# --- Relatórios ---
+exibir_titulo("📜 EXTRATO DETALHADO")
 minha_carteira.mostrar_transacoes()
 
-print("\n--- Resumo Financeiro ---")
+exibir_titulo("💰 RESUMO DE SALDO")
 minha_carteira.mostrar_saldo()
 
-print("\n--- Análise por Categoria ---")
+exibir_titulo("📊 ANÁLISE POR CATEGORIA")
 minha_carteira.gasto_por_categoria()
 
-print("\n--- Maior Despesa Individual ---")
+exibir_titulo("🔍 DESTAQUES DE CONSUMO")
 minha_carteira.maior_gasto()
-
-print("\n--- Categoria com Maior Gasto ---")
 minha_carteira.categoria_maior_gasto()
 
-print("\n--- Salvando transações em JSON ---")
+# --- Finalização ---
+print(f"\n{'*'*35}")
+print("💾 Salvando dados no banco JSON...")
 minha_carteira.salvar_json()
-
-print("✅ Dados salvos com sucesso!")
+print("✅ Operação finalizada com sucesso!")
+print(f"{'*'*35}")

@@ -1,50 +1,62 @@
-## 📊 Gerenciador Financeiro — POO
-Este projeto é uma aplicação de terminal desenvolvida em Python que utiliza os pilares da Programação Orientada a Objetos para gerenciar transações financeiras. O sistema permite o registro de receitas e despesas, calculando o saldo final e gerando um extrato detalhado.
-## 🛠️ Tecnologias e Conceitos Utilizados
-- Python 3.x: Linguagem principal.
+## 📊 Gerenciador Financeiro Pro — POO & JSON
+Este projeto é uma aplicação de terminal desenvolvida em Python que utiliza os pilares da Programação Orientada a Objetos (POO) para gerenciar finanças pessoais. O sistema agora conta com persistência de dados, permitindo salvar e carregar transações automaticamente.
 
-## POO (Programação Orientada a Objetos):
+*🚀 Novidades da Versão*
+- Persistência em JSON: Seus dados não somem ao fechar o programa.
+- Análise de Gastos: Identificação automática da categoria onde você mais gasta.
+- Relatórios Detalhados: Soma de totais de receitas e despesas separadamente.
 
-- Classes e Objetos: Estruturação de Transacao, Carteira, etc.
-- Herança: As classes Receita e Despesa herdam atributos e métodos da classe base Transacao.
-- Polimorfismo: O método impacto_saldo() é implementado de formas diferentes para receitas e despesas.
-- Encapsulamento: Gerenciamento do estado do saldo dentro da classe Carteira.
+*🛠️ Tecnologias e Conceitos*
+- 🐍 Python 3.x
+- Utilização de manipulação de arquivos, dicionários e listas.
+
+## 🏛️ Programação Orientada a Objetos:
+- Classes e Objetos: Estruturação das entidades Transacao, Receita, Despesa e Carteira.
+- Herança: Receita e Despesa herdam atributos de Transacao.
+- Polimorfismo: O método impacto_saldo() executa comportamentos diferentes (soma ou subtração) dependendo do tipo do objeto.
+- Encapsulamento: A classe Carteira centraliza a lógica de negócio e proteção do saldo.
 
 ## 🏗️ Estrutura do Código
-***O sistema é dividido em quatro classes principais:***
+- Transacao: Classe base com descricao, valor e categoria. Possui o método to_dict() para conversão de dados.
+- Receita / Despesa: Classes especializadas que definem como cada valor afeta o saldo.
+- Carteira: O motor do sistema. Gerencia a lista de transações, calcula totais, filtra categorias e manipula o arquivo transacao.json.
 
-- Transacao: Classe base que armazena descrição, valor e categoria.
-- Receita: Especialização que soma o valor ao saldo.
-- Despesa: Especialização que subtrai o valor do saldo.
-- Carteira: Atua como o "cérebro" do sistema, armazenando a lista de transações e atualizando o saldo total.
+## 📂 Persistência de Dados
+- O sistema utiliza um arquivo chamado transacao.json para armazenar as informações.
+- Leitura: Ao iniciar, o sistema tenta carregar transações existentes.
+- Escrita: Ao finalizar, todas as operações da sessão são salvas automaticamente.
 
-## 🚀 Como Executar
-- Certifique-se de ter o Python instalado.
-- Copie o código para um arquivo chamado main.py.
-
-**Execute o comando:**
-```
-bash
-Copy code
-python main.py
-```
 ## 📋 Exemplo de Saída
 ```
---- Processando Transações ---
-✅ Sucesso: R$ +5000.00 adicionado ao saldo
-✅ Sucesso: R$ +350.00 adicionado ao saldo
-⚠️ Saída: R$ -420.50 debitado com sucesso
-⚠️ Saída: R$ -25.00 debitado com sucesso
-⚠️ Saída: R$ -45.00 debitado com sucesso
+========== 📂 SISTEMA DE FINANÇAS ==========
+🔄 Carregando dados anteriores...
+📊 Dados existentes carregados com sucesso!
 
---- Extrato Detalhado ---
+========== 📜 EXTRATO DETALHADO ==========
 Salário Mensal | 5000.0 | Trabalho
-Freelance Logo | 350.0 | Design
-Mercado Semanal | 420.5 | Alimentação
-Uber Shopping | 25.0 | Transporte
-Ingresso Cinema | 45.0 | Lazer
---- Resumo Financeiro ---
-Saldo atual: R$ 4859.5
-```
+Mercado Semanal | 420.5 | Alimentacao
 
-***Feitopor Arthur Lanzoni***
+========== 💰 RESUMO DE SALDO ==========
+Saldo atual: R$ 4579.5
+
+========== 📊 ANÁLISE POR CATEGORIA ==========
+Gastos por categoria:
+Alimentacao → R$ 420.50
+
+========== 🔍 DESTAQUES DE CONSUMO ==========
+Maior despesa: R$ 420.50
+Categoria com maior gasto: Alimentacao — R$ 420.50
+
+***********************************
+💾 Salvando dados no banco JSON...
+✅ Operação finalizada com sucesso!
+***********************************
+```
+## ⚙️ Como Executar
+- Certifique-se de ter o Python 3 instalado.
+- Salve o código em um arquivo main.py.
+- Execute no terminal:
+```
+python main.py
+```
+**Feito por Arthur Lanzoni**

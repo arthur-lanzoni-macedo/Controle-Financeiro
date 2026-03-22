@@ -1,5 +1,5 @@
 import json  # salvar os dados em arquivo JSON
-
+import os
 
 # Classe base de qualquer transação (entrada ou saída)
 class Transacao:
@@ -22,7 +22,99 @@ class Transacao:
     # mostra a transação no terminal
     def mostrar_transacao(self):
         print(f'{self.descricao} | {self.valor} | {self.categoria}')
+ 
+ # MENU INICIAL
+ 
+    def exibir_titulos(self, mensagem):
+        print(mensagem)
+
+class Menu_Inicial():
+    def menu(self):
+        try:    
+            while True:
+                self.exibir_titulos('📂 SISTEMA DE FINANÇAS\n')
+                print('1 — Adicionar receita')
+                print('2 — Adicionar despesa')
+                print('3 — Ver extrato')
+                print('4 — Relatórios')
+                print('5 — Salvar e sair\n')
+                
+                opcao = int(input('Qual opção gostaria'))
+                
+            
+                if opcao == 1:
+                    ...
+                    self.voltar_menu()
+                elif opcao == 2:
+                    ...
+                    self.voltar_menu()
+                elif opcao == 3:
+                    self.ver_extrato()
+                    self.voltar_menu()
+                elif opcao == 4:
+                    self.relatorios()
+                    self.voltar_menu()
+                elif opcao == 5:
+                    self.salvar_sair()
+                    print('Finanças salvas com sucesso!')
+                    break
+                else:
+                    print('Opção inválida, tente novamente!')
+        except ValueError:
+                print("💥 ERRO CRÍTICO: O programa encontrou um valor inválido!")
+                
+    # 3- Ver extrato              
+    def ver_extrato(self):
+
+        if len(minha_carteira.transacoes) == 0:
+
+            print("\n🆕 Nenhum dado encontrado. Criando dados iniciais...")
+
+            novas_transacoes = [
+                Receita("Salário Mensal", 5000.00, "Trabalho"),
+                Receita("Freelance Logo", 350.00, "Design"),
+                Despesa("Mercado Semanal", 420.50, "Alimentacao"),
+                Despesa("Uber Shopping", 25.00, "Transporte"),
+                Despesa("Ingresso Cinema", 45.00, "Lazer")
+            ]
+
+            for t in novas_transacoes:
+                minha_carteira.adicionar_transacao(t)
+
+        else:
+            print("📊 Dados existentes carregados com sucesso!")
+            
+    # 4 - Relatórios      
+    def relatorios(self):
         
+        self.exibir_titulos("📜 EXTRATO DETALHADO")
+        minha_carteira.mostrar_transacoes()
+
+        self.exibir_titulos("💰 RESUMO DE SALDO")
+        minha_carteira.mostrar_saldo()
+
+        self.exibir_titulos("📊 ANÁLISE POR CATEGORIA")
+        minha_carteira.gasto_por_categoria()
+
+        self.exibir_titulos("🔍 DESTAQUES DE CONSUMO")
+        minha_carteira.maior_gasto()
+        minha_carteira.categoria_maior_gasto() 
+        
+    # 5 - Salvar e sair
+    def salvar_sair(self):
+        print(f"\n{'*'*35}")
+        print("💾 Salvando dados no banco JSON...")
+        minha_carteira.salvar_json()
+        print("✅ Operação finalizada com sucesso!")
+        print(f"{'*'*35}")
+    
+    # Controle de menu
+    def limpar_tela(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        
+    def voltar_menu(self):
+        input("\nPressione Enter para voltar ao menu...")
+        self.limpar_tela()
 
 # Classe de dinheiro que entra
 class Receita(Transacao):
@@ -156,9 +248,7 @@ class Carteira:
                 tipo = item_json['tipo']
                 descricao = item_json['descricao']
                 valor = item_json['valor']
-                categoria = item_json['categoria']
-                
-                tipo_lista = set()
+                categoria = item_json['categoria'] 
                               
                 if tipo == 'Receita':
                     tipo_lista = Receita(descricao, valor, categoria)
@@ -175,50 +265,9 @@ class Carteira:
 
 minha_carteira = Carteira()
 
-def exibir_titulo(mensagem):
-    print(f"\n{'='*10} {mensagem} {'='*10}")
-
 # --- Inicialização ---
-exibir_titulo("📂 SISTEMA DE FINANÇAS")
+Menu_Inicial.menu()
+Menu_Inicial.escolha_opcao()
+
 print("🔄 Carregando dados anteriores...")
 minha_carteira.carregar_json()
-
-# ⭐ SÓ adiciona dados se a carteira estiver vazia
-if len(minha_carteira.transacoes) == 0:
-
-    print("\n🆕 Nenhum dado encontrado. Criando dados iniciais...")
-
-    novas_transacoes = [
-        Receita("Salário Mensal", 5000.00, "Trabalho"),
-        Receita("Freelance Logo", 350.00, "Design"),
-        Despesa("Mercado Semanal", 420.50, "Alimentacao"),
-        Despesa("Uber Shopping", 25.00, "Transporte"),
-        Despesa("Ingresso Cinema", 45.00, "Lazer")
-    ]
-
-    for t in novas_transacoes:
-        minha_carteira.adicionar_transacao(t)
-
-else:
-    print("📊 Dados existentes carregados com sucesso!")
-
-# --- Relatórios ---
-exibir_titulo("📜 EXTRATO DETALHADO")
-minha_carteira.mostrar_transacoes()
-
-exibir_titulo("💰 RESUMO DE SALDO")
-minha_carteira.mostrar_saldo()
-
-exibir_titulo("📊 ANÁLISE POR CATEGORIA")
-minha_carteira.gasto_por_categoria()
-
-exibir_titulo("🔍 DESTAQUES DE CONSUMO")
-minha_carteira.maior_gasto()
-minha_carteira.categoria_maior_gasto()
-
-# --- Finalização ---
-print(f"\n{'*'*35}")
-print("💾 Salvando dados no banco JSON...")
-minha_carteira.salvar_json()
-print("✅ Operação finalizada com sucesso!")
-print(f"{'*'*35}")

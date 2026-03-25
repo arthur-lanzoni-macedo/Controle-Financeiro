@@ -1,32 +1,30 @@
 [
     {
         "tipo": "Receita",
-        "descricao": "Sal\u00e1rio Mensal",
-        "valor": 5000.0,
-        "categoria": "Trabalho"
+        "descricao": "salario",
+        "valor": 3500.0,
+        "categoria": "trabalho",
+        "data": "24/03/2026"
+    },
+    {
+        "tipo": "Despesa",
+        "descricao": "mercado",
+        "valor": 520.0,
+        "categoria": "alimentacao",
+        "data": "24/03/2026"
     },
     {
         "tipo": "Receita",
-        "descricao": "Freelance Logo",
-        "valor": 350.0,
-        "categoria": "Design"
+        "descricao": "freelance",
+        "valor": 800.0,
+        "categoria": "extra",
+        "data": "24/03/2026"
     },
     {
         "tipo": "Despesa",
-        "descricao": "Mercado Semanal",
-        "valor": 420.5,
-        "categoria": "Alimentacao"
-    },
-    {
-        "tipo": "Despesa",
-        "descricao": "Uber Shopping",
-        "valor": 25.0,
-        "categoria": "Transporte"
-    },
-    {
-        "tipo": "Despesa",
-        "descricao": "Ingresso Cinema",
-        "valor": 45.0,
-        "categoria": "Lazer"
+        "descricao": "aluguel",
+        "valor": 1200.0,
+        "categoria": "moradia",
+        "data": "24/03/2026"
     }
 ]

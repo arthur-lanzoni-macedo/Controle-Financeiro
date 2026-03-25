@@ -46,8 +46,8 @@ O sistema opera com um ciclo de vida de dados seguro:
 ✅ Dados carregados com sucesso!
 
 ========== 📜 EXTRATO DETALHADO ==========
-➕ Salário Mensal   | R$ 5000.00 | 💼 Trabalho
-➖ Mercado Semanal  | R$ 420.50  | 🛒 Alimentação
+➕ 20/03/2026 | Salário Mensal   | R$ 5000.00 | 💼 Trabalho
+➖ 25/03/2026 | Mercado Semanal  | R$ 420.50  | 🛒 Alimentação
 
 ========== 💰 RESUMO DE SALDO ==========
 Saldo atual: R$ 4579.50

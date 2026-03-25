@@ -1,62 +1,78 @@
 ## 📊 Gerenciador Financeiro Pro — POO & JSON
-Este projeto é uma aplicação de terminal desenvolvida em Python que utiliza os pilares da Programação Orientada a Objetos (POO) para gerenciar finanças pessoais. O sistema agora conta com persistência de dados, permitindo salvar e carregar transações automaticamente.
+Este projeto é uma aplicação de terminal robusta desenvolvida em Python, focada na gestão de finanças pessoais. Utilizando os pilares da Programação Orientada a Objetos (POO) e persistência de dados em JSON, o sistema oferece uma estrutura escalável para controle de receitas e despesas.
 
-*🚀 Novidades da Versão*
-- Persistência em JSON: Seus dados não somem ao fechar o programa.
-- Análise de Gastos: Identificação automática da categoria onde você mais gasta.
-- Relatórios Detalhados: Soma de totais de receitas e despesas separadamente.
+*🚀 Novidades da Versão 2.0*
 
-*🛠️ Tecnologias e Conceitos*
-- 🐍 Python 3.x
-- Utilização de manipulação de arquivos, dicionários e listas.
+💾 Persistência Automática: Integração com transacao.json para salvar e carregar dados entre sessões.
 
-## 🏛️ Programação Orientada a Objetos:
-- Classes e Objetos: Estruturação das entidades Transacao, Receita, Despesa e Carteira.
-- Herança: Receita e Despesa herdam atributos de Transacao.
-- Polimorfismo: O método impacto_saldo() executa comportamentos diferentes (soma ou subtração) dependendo do tipo do objeto.
-- Encapsulamento: A classe Carteira centraliza a lógica de negócio e proteção do saldo.
+🧠 Inteligência de Negócio: Algoritmo para identificação automática da categoria com maior índice de gastos.
+📈 Relatórios Analíticos: Separação lógica entre fluxos de entrada (Receitas) e saída (Despesas).
+
+🎨 Terminal UX: Interface estilizada com emojis e divisores visuais para melhor legibilidade.
+
+🏛️ Arquitetura e Conceitos de POO
+O sistema foi desenhado seguindo padrões de engenharia de software para garantir código limpo e reutilizável:
+
+- Classes e Objetos: Entidades bem definidas como Transacao, Receita, Despesa e Carteira.
+
+- Herança: Receita e Despesa herdam atributos base de Transacao, reduzindo a duplicidade de código.
+
+- Polimorfismo: O método impacto_saldo() comporta-se de forma distinta conforme o tipo do objeto, somando ou subtraindo valores do montante total.
+
+- Encapsulamento: A classe Carteira atua como o núcleo do sistema, protegendo a lógica de cálculo e a manipulação direta do arquivo de dados.
 
 ## 🏗️ Estrutura do Código
-- Transacao: Classe base com descricao, valor e categoria. Possui o método to_dict() para conversão de dados.
-- Receita / Despesa: Classes especializadas que definem como cada valor afeta o saldo.
-- Carteira: O motor do sistema. Gerencia a lista de transações, calcula totais, filtra categorias e manipula o arquivo transacao.json.
+- Transacao: Classe abstrata/base contendo descricao, valor e categoria. Inclui o método to_dict() para serialização.
 
-## 📂 Persistência de Dados
-- O sistema utiliza um arquivo chamado transacao.json para armazenar as informações.
-- Leitura: Ao iniciar, o sistema tenta carregar transações existentes.
-- Escrita: Ao finalizar, todas as operações da sessão são salvas automaticamente.
+- Receita / Despesa: Especializações que definem a natureza do impacto financeiro.
 
-## 📋 Exemplo de Saída
+- Carteira: O motor do sistema. Gerencia a lista de objetos, realiza o parsing do JSON, filtra categorias e gera as estatísticas.
+
+*📂 Fluxo de Persistência (JSON)*
+O sistema opera com um ciclo de vida de dados seguro:
+
+- Leitura (Startup): Busca o arquivo transacao.json. Caso não exista, inicia uma nova carteira vazia.
+
+- Processamento: Transforma dicionários JSON em instâncias de objetos vivos na memória.
+
+- Escrita (Shutdown): Converte os objetos de volta para JSON, garantindo a integridade da informação.
+
+## 📋 Exemplo de Interface
 ```
-========== 📂 SISTEMA DE FINANÇAS ==========
+==========================================
+        📂 SISTEMA DE FINANÇAS
+==========================================
 🔄 Carregando dados anteriores...
-📊 Dados existentes carregados com sucesso!
+✅ Dados carregados com sucesso!
 
 ========== 📜 EXTRATO DETALHADO ==========
-Salário Mensal | 5000.0 | Trabalho
-Mercado Semanal | 420.5 | Alimentacao
+➕ Salário Mensal   | R$ 5000.00 | 💼 Trabalho
+➖ Mercado Semanal  | R$ 420.50  | 🛒 Alimentação
 
 ========== 💰 RESUMO DE SALDO ==========
-Saldo atual: R$ 4579.5
+Saldo atual: R$ 4579.50
 
 ========== 📊 ANÁLISE POR CATEGORIA ==========
-Gastos por categoria:
-Alimentacao → R$ 420.50
+🛒 Alimentação   → R$ 420.50
+💼 Trabalho      → R$ 5000.00
 
 ========== 🔍 DESTAQUES DE CONSUMO ==========
-Maior despesa: R$ 420.50
-Categoria com maior gasto: Alimentacao — R$ 420.50
+🚨 Maior despesa: R$ 420.50
+🏆 Categoria com maior gasto: Alimentação
 
-***********************************
-💾 Salvando dados no banco JSON...
-✅ Operação finalizada com sucesso!
-***********************************
+******************************************
+💾 Salvando transações em transacao.json...
+✨ Operação finalizada com sucesso!`
+******************************************
 ```
-## ⚙️ Como Executar
-- Certifique-se de ter o Python 3 instalado.
-- Salve o código em um arquivo main.py.
-- Execute no terminal:
+*⚙️ Como Executar*
+Certifique-se de ter o Python 3.10+ instalado.
+
+Clone o repositório ou salve o código em main.py.
+Execute no terminal:
 ```
+Bash
 python main.py
 ```
-**Feito por Arthur Lanzoni**
+
+Desenvolvido por Arthur Lanzoni
